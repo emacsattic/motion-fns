@@ -1,26 +1,10 @@
 ;;; motion-fns.el --- motion and insertion functions
 
-;; Copyright (C) 1991, 92, 93, 94, 95, 96, 97, 98, 99, 02, 2004 Noah S. Friedman
-
 ;; Author: Noah Friedman <friedman@splode.com>
 ;; Maintainer: friedman@splode.com
+;; Public domain.
 
-;; $Id: motion-fns.el,v 1.4 2004/07/25 16:29:13 friedman Exp $
-
-;; This program is free software; you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation; either version 2, or (at your option)
-;; any later version.
-;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-;;
-;; You should have received a copy of the GNU General Public License
-;; along with this program; if not, you can either send email to this
-;; program's maintainer or write to: The Free Software Foundation,
-;; Inc.; 59 Temple Place, Suite 330; Boston, MA 02111-1307, USA.
+;; $Id: motion-fns.el,v 1.5 2015/08/27 03:24:44 friedman Exp $
 
 ;;; Commentary:
 ;;; Code:
@@ -123,13 +107,14 @@ Return distance in buffer moved, or nil."
                (setq longest-line line)))))
     (goto-line (1+ longest-line))))
 
-;; This used to be called move-to-column-force, but Emacs 20 defines that.
+;; This used to be called move-to-column-force, but Emacs 20 defined that in rect.el.
+;; Subsequently, move-to-column changed to take a 2nd argument to force.
 ;;;###autoload
 (defun move-to-column-rigidly (column)
   "Sets point at column COLUMN on the current line, appending spaces if
 end-of-line precedes desired column.  To just move to a column or end
 of line (whichever comes first), use move-to-column instead."
-  (interactive)
+  (interactive "NForce move to column: ")
   (let ((column-reached (move-to-column column)))
     (or (equal column column-reached)
         (insert-char ?  (- column column-reached))))
