@@ -4,7 +4,7 @@
 ;; Maintainer: friedman@splode.com
 ;; Public domain.
 
-;; $Id: motion-fns.el,v 1.5 2015/08/27 03:24:44 friedman Exp $
+;; $Id: motion-fns.el,v 1.6 2017/06/05 19:01:35 friedman Exp $
 
 ;;; Commentary:
 ;;; Code:
@@ -156,6 +156,23 @@ window; and so on."
          (other-window other-window-direction all-frames))
         ((null arg)
          (other-window (setq other-window-direction 1)))))
+
+
+(defun next-narrowed-page ()
+  (interactive)
+  (widen)
+  (when (re-search-forward "\f" nil t)
+    (forward-char 1))
+  (narrow-to-page))
+
+(defun prev-narrowed-page ()
+  (interactive)
+  (widen)
+  (when (re-search-backward "\f" nil t)
+    (forward-char -2))
+  (narrow-to-page)
+  (goto-char (point-min)))
+
 
 (provide 'motion-fns)
 
